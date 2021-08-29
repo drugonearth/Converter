@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/example
+    username: postgres
+    password: hy6ac54wisks777
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        temp:
+          use_jdbc_metadata_defaults: false
+mvc:
+  resources:
+    mapping: "/resources/**"
+    location: "classpath:/resources"

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="headerfiles">
+    <title>Converter</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body th:fragment="body">
+<div>
+    <form method="post" action="convert">
+        <input type="text" name="convert" placeholder="Input" />
+        <button type="submit">Конвертировать</button>
+    </form>
+    <p th:text = "${output}"></p>
+</div>
+</body>
+</html>
