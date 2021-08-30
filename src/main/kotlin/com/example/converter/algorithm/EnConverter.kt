@@ -17,7 +17,7 @@ class EnConverter : Converter(){
     )
 
     override fun stringToNum(input: String): String {
-        val arr = ArrayList(input.toLowerCase().split(" "))
+        val arr = ArrayList(input.lowercase(Locale.getDefault()).split(" "))
 
         var output: StringBuilder = StringBuilder()
 

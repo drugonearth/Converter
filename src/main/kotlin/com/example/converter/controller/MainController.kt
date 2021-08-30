@@ -1,11 +1,14 @@
 package com.example.converter.controller
 
 import ConverterInputException
+import EnConverter
 import RuConverter
+import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
+import java.util.*
 
 
 @Controller
@@ -16,9 +19,9 @@ class MainController {
         return "login"
     }
 
-    @GetMapping("styles.css")
-    fun css(model: Map<String, Any>): String {
-        return "styles.css"
+    @GetMapping("/login")
+    fun login(model: Map<String, Any>): String {
+        return "main"
     }
 
     @GetMapping("/main")
@@ -27,16 +30,30 @@ class MainController {
     }
 
     @PostMapping("convert")
-    fun filter(@RequestParam convert: String, model: MutableMap<String, Any>): String {
-
+    fun convert(@RequestParam convert: String, model: MutableMap<String, Any>): String {
+        val locale = LocaleContextHolder.getLocale()
         var output: String?
         try {
-            output = RuConverter().gettingData(convert)
-            model["output"] = output
+            if(locale == Locale("ru")) {
+                output = RuConverter().gettingData(convert)
+                model["output"] = output
+            }
+            else
+            {
+                output = EnConverter().gettingData(convert)
+                model["output"] = output
+            }
         }
         catch(exception: ConverterInputException)
         {
-            model["output"] = "Error"
+            if(locale == Locale("ru")) {
+                model["output"] = "Ошибка"
+            }
+            else
+            {
+                output = EnConverter().gettingData(convert)
+                model["output"] = "Error"
+            }
         }
         return "main"
     }

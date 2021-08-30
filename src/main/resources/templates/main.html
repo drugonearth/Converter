@@ -3,13 +3,24 @@
 <head th:fragment="headerfiles">
     <title>Converter</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" th:href="@{../css/styles.css}" type="text/css" media="all">
 </head>
+<header th:fragment="header">
+    <h1>Converter</h1>
+    <span style = "float: right">
+    <a href="?language=en">en</a>
+    <a href="?language=ru">ru</a>
+    </span>
+</header>
+<br>
+<br>
+<br>
 <body th:fragment="body">
 <div>
     <form method="post" action="convert">
-        <input type="text" name="convert" placeholder="Input" />
-        <button type="submit">Конвертировать</button>
+        <input type="text" name="convert" th:placeholder="#{input}"/>
+        <br>
+        <button th:text="#{convert}" type="submit">Конвертировать</button>
     </form>
     <p th:text = "${output}"></p>
 </div>

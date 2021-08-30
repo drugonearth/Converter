@@ -1,14 +1,11 @@
 package com.example.converter.db
 
-import lombok.NoArgsConstructor
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import lombok.NonNull
+import javax.persistence.*
 
 
 @Entity
-@NoArgsConstructor
-data class User(@Id @GeneratedValue(strategy = GenerationType.AUTO)
-                val id: Long, val username: String, val password: String) {
-}
+@Table(name="USRS")
+data class User(@Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Long=0L
+                , val username: String
+                , val password: String)

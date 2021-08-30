@@ -1,4 +1,5 @@
 import java.lang.StringBuilder
+import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -20,7 +21,7 @@ class RuConverter: Converter() {
     )
 
     override fun stringToNum(input: String): String {
-        val arr = ArrayList(input.toLowerCase().split(" "))
+        val arr = ArrayList(input.lowercase(Locale.getDefault()).split(" "))
 
         var output: StringBuilder = StringBuilder()
 

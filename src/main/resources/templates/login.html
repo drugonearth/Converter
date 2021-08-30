@@ -3,14 +3,16 @@
 <head>
     <title>Converter</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}" type="text/css" media="all">
 </head>
 <body>
 
-<div>
-    <h1>My Website</h1>
-    <p>A website created by me.</p>
-</div>
-<th:
+<form action="/login" method="post">
+    <div><label> User Name : <input type="text" name="username"/> </label></div>
+    <div><label> Password: <input type="password" name="password"/> </label></div>
+    <div><input type="submit" value="Sign In"/></div>
+</form>
+<a href="/registration">Add new user</a>
+
 </body>
 </html>
