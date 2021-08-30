@@ -6,10 +6,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.crypto.password.NoOpPasswordEncoder
-import javax.sql.DataSource
 
 @Configuration
-class SecurityConfig(private val  dataSource: DataSource) : WebSecurityConfigurerAdapter() {
+class SecurityConfig(private val  userService: UserService) : WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
@@ -28,10 +27,8 @@ class SecurityConfig(private val  dataSource: DataSource) : WebSecurityConfigure
 
     @Throws(java.lang.Exception::class)
     override fun configure(auth: AuthenticationManagerBuilder) {
-        auth.jdbcAuthentication()
-            .dataSource(dataSource)
+        auth.userDetailsService(userService)
             .passwordEncoder(NoOpPasswordEncoder.getInstance())
-
     }
 
 }

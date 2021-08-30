@@ -1,19 +1,15 @@
 package com.example.converter.service
 
-import com.example.converter.db.User
 import com.example.converter.repos.UserRepo
+import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 
 
 @Service
-class UserService(private val db: UserRepo) {
+class UserService(private val userRepo: UserRepo) : UserDetailsService {
 
-    fun findUser(username: String?): User? = db.findByUsername(username)
-
-    fun adduser(user: User)
-    {
-        db.save(user)
-    }
-
+    @Throws(UsernameNotFoundException::class)
+    override fun loadUserByUsername(username: String?) = userRepo.findByUsername(username)
 
 }
