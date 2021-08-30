@@ -4,6 +4,7 @@ import com.example.converter.db.User
 import com.example.converter.repos.UserRepo
 import org.springframework.stereotype.Service
 
+
 @Service
 class UserService(private val db: UserRepo) {
 
@@ -13,4 +14,6 @@ class UserService(private val db: UserRepo) {
     {
         db.save(user)
     }
+
+
 }

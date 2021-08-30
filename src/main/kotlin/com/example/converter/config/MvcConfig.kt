@@ -29,4 +29,5 @@ class MvcConfig: WebMvcConfigurer {
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(localeChangeInterceptor()!!)
     }
+
 }

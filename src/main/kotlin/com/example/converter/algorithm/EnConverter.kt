@@ -1,7 +1,11 @@
+import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.stereotype.Component
 import java.lang.StringBuilder
 import java.util.*
 import kotlin.collections.ArrayList
 
+@Qualifier("en")
+@Component
 class EnConverter : Converter(){
 
     private val digitMap:Map<Int, Array<String>> = mapOf(
@@ -15,6 +19,10 @@ class EnConverter : Converter(){
         2 to arrayOf("million", "millions"),
         3 to arrayOf("milliard", "milliards" ),
     )
+
+    override fun getLanguage(): String {
+        return "en"
+    }
 
     override fun stringToNum(input: String): String {
         val arr = ArrayList(input.lowercase(Locale.getDefault()).split(" "))

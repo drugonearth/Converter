@@ -1,5 +1,6 @@
 package com.example.converter.controller
 
+import Converter
 import ConverterInputException
 import EnConverter
 import RuConverter
@@ -8,11 +9,15 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.servlet.ModelAndView
 import java.util.*
 
 
 @Controller
-class MainController {
+class MainController(val converters: List<Converter> ) {
+
+    private val config = ResourceBundle.getBundle("messages")
+    private var converterMap : Map<String, Converter> = converters.associateBy { it.getLanguage() };
 
     @GetMapping("/")
     fun start(model: Map<String, Any>): String {
@@ -21,40 +26,28 @@ class MainController {
 
     @GetMapping("/login")
     fun login(model: Map<String, Any>): String {
-        return "main"
+        return "login"
     }
 
     @GetMapping("/main")
     fun main(model: MutableMap<String, Any>): String {
-        return "main"
+        return "main";
     }
 
-    @PostMapping("convert")
+    @PostMapping("/main")
     fun convert(@RequestParam convert: String, model: MutableMap<String, Any>): String {
         val locale = LocaleContextHolder.getLocale()
-        var output: String?
-        try {
-            if(locale == Locale("ru")) {
-                output = RuConverter().gettingData(convert)
-                model["output"] = output
+        converterMap[locale.language]?.let {
+            try {
+                model["output"] = it.gettingData(convert)
+            } catch(exception: ConverterInputException) {
+                model["output"] = exception.message
             }
-            else
-            {
-                output = EnConverter().gettingData(convert)
-                model["output"] = output
-            }
+        } ?: run {
+            model["output"] = config.getString("language")
         }
-        catch(exception: ConverterInputException)
-        {
-            if(locale == Locale("ru")) {
-                model["output"] = "Ошибка"
-            }
-            else
-            {
-                output = EnConverter().gettingData(convert)
-                model["output"] = "Error"
-            }
-        }
+
+
         return "main"
     }
 

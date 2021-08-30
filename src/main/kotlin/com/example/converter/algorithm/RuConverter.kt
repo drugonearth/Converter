@@ -1,8 +1,11 @@
+import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.stereotype.Component
 import java.lang.StringBuilder
 import java.util.*
 import kotlin.collections.ArrayList
 
-
+@Qualifier("ru")
+@Component
 class RuConverter: Converter() {
 
     private val digitMap:Map<Int, Array<String>> = mapOf(
@@ -19,6 +22,10 @@ class RuConverter: Converter() {
         3 to arrayOf("миллиардов","миллиард", "миллиарда", "миллиарда", "миллиарда", "миллиардов",
             "миллиардов", "миллиардов", "миллиардов", "миллиардов"),
     )
+
+    override fun getLanguage(): String {
+        return "ru"
+    }
 
     override fun stringToNum(input: String): String {
         val arr = ArrayList(input.lowercase(Locale.getDefault()).split(" "))
@@ -57,10 +64,8 @@ class RuConverter: Converter() {
         if(arr.isEmpty()) return false
         val temp: String = arr.last();
 
-        for(i in from..to)
-        {
-            if(temp==digitMap[dmPos]?.get(i))
-            {
+        for(i in from..to) {
+            if(temp==digitMap[dmPos]?.get(i)) {
                 arr.removeLast();
                 sb.insert(0, i.toString())
                 return true

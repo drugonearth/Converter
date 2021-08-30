@@ -18,6 +18,8 @@ abstract class Converter {
         }
     }
 
+    abstract fun getLanguage(): String
+
     abstract fun numToString(input: String, minus: Boolean): String
 
     abstract fun stringToNum(input: String): String
