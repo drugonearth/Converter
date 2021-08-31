@@ -1,10 +1,12 @@
+package com.example.converter.algorithm
+
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import java.lang.StringBuilder
 import java.util.*
 import kotlin.collections.ArrayList
 
-@Qualifier("ru")
+
 @Component
 class RuConverter: Converter() {
 

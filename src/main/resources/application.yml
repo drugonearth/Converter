@@ -1,10 +1,11 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/sweater
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
-    password: hy6ac54wisks777
+    password: 123
   jpa:
     generate-ddl: true
+
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL95Dialect

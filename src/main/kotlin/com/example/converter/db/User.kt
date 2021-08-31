@@ -11,11 +11,13 @@ import javax.persistence.*
 data class User(@Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Long=0L
                 , private val username: String
                 , private val password: String
-                , var active: Boolean
+                , var active: Boolean = false
                 , @ElementCollection(targetClass = Role::class, fetch = FetchType.EAGER)
                 @CollectionTable(name = "user_role", joinColumns = [JoinColumn(name = "user_id")])
                 @Enumerated(EnumType.STRING)
-                var roles: Set<Role>? = null) : UserDetails
+                var roles: Set<Role>? = null,
+                @OneToMany
+                var history: MutableList<ConverterMessage>? ) : UserDetails
 {
     override fun getAuthorities(): Set<Role>? = roles
 

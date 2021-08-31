@@ -5,20 +5,21 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{../css/styles.css}" type="text/css" media="all">
 </head>
-<header>
+<header th:fragment="header">
+    <h1>Converter history</h1>
     <span style = "float: right">
     <a href="?language=en">en</a>
     <a href="?language=ru">ru</a>
     </span>
 </header>
-<body>
-<form th:action="@{/login}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
-</form>
-<a href="/registration">Add new user</a>
-
-</body>
+<br>
+<br>
+<br>
+<tbody>
+<tr th:each="str: ${historyList}">
+    <td th:text="${str.inputString}"></td>
+    <td th:text="${str.convertedString}"></td>
+    <br>
+</tr>
+</tbody>
 </html>
-
