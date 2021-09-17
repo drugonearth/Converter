@@ -41,7 +41,7 @@ class SecurityConfig(private val  userService: UserService) : WebSecurityConfigu
     }
 
     override fun configure(web: WebSecurity?) {
-        web?.ignoring()?.antMatchers("/resources/**", "/static/**", "/css/**", "/registration/**")
+        web?.ignoring()?.antMatchers("/resources/**", "/static/**", "/css/**", "/registration/**","/js/**")
     }
 
 }

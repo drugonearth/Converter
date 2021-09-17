@@ -15,9 +15,7 @@ data class User(@Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: 
                 , @ElementCollection(targetClass = Role::class, fetch = FetchType.EAGER)
                 @CollectionTable(name = "user_role", joinColumns = [JoinColumn(name = "user_id")])
                 @Enumerated(EnumType.STRING)
-                var roles: Set<Role>? = null,
-                @OneToMany
-                var history: MutableList<ConverterMessage>? ) : UserDetails
+                var roles: Set<Role>? = null ) : UserDetails
 {
     override fun getAuthorities(): Set<Role>? = roles
 

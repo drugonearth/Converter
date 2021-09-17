@@ -16,13 +16,18 @@
 <br>
 <br>
 <body th:fragment="body">
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
 <div>
-    <form method="post" action="main">
-        <input type="text" name="convert" th:placeholder="#{input}"/>
+    <th:form>
+        <input th:placeholder="#{input}" id="inputBox">
         <br>
-        <button th:text="#{convert}" type="submit">Конвертировать</button>
-    </form>
-    <p th:text = "${output}"></p>
+        <button th:text="#{convert}" id="convertButton">Конвертировать</button>
+        <br>
+        <p id="contentOutput"></p>
+    </th:form>
 </div>
+<script src="../js/mainScript.js"></script>
 </body>
 </html>

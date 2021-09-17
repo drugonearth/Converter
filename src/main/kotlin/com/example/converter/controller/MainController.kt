@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.servlet.ModelAndView
 import java.util.*
 import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
@@ -33,28 +34,48 @@ class MainController(val converters: List<Converter>, private val converterMessa
         return "main";
     }
 
-    @PostMapping("/main")
-    fun convert(@RequestParam convert: String, converterMessage: ConverterMessage,
-                model: MutableMap<String, Any>): String {
+//    @PostMapping("/addToHistory")
+//    @ResponseBody
+//    fun convert(@RequestParam convert: String, converterMessage: ConverterMessage, ): String {
+//        val locale = LocaleContextHolder.getLocale()
+//        lateinit var output: String
+//
+//        converterMap[locale.language]?.let {
+//            output = try {
+//                it.gettingData(convert)
+//            } catch(exception: ConverterInputException) {
+//                exception.message
+//            }
+//        } ?: run {
+//            output = config.getString("error")
+//        }
+//
+//
+//        converterMessage.user = SecurityContextHolder.getContext().authentication.principal as User
+//        converterMessage.inputString = convert
+//
+//        converterMessage.convertedString = output
+//        converterMessageRepo.save(converterMessage)
+//
+//        return output
+//    }
+
+    @PostMapping("/convert")
+    @ResponseBody
+    fun addToHistory(@RequestParam convert: String): String {
         val locale = LocaleContextHolder.getLocale()
+        lateinit var output: String
 
         converterMap[locale.language]?.let {
-            try {
-                model["output"] = it.gettingData(convert)
+            output = try {
+                it.gettingData(convert)
             } catch(exception: ConverterInputException) {
-                model["output"] = exception.message
+                exception.message
             }
         } ?: run {
-            model["output"] = config.getString("error")
+            output = config.getString("error")
         }
-
-
-        converterMessage.user = SecurityContextHolder.getContext().authentication.principal as User
-        converterMessage.inputString = convert
-        converterMessage.convertedString = model["output"] as String?
-        converterMessageRepo.save(converterMessage)
-
-        return "main"
+        return output
     }
 
     @GetMapping("/history")
