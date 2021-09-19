@@ -1,21 +1,19 @@
-$('#convertButton').change(function() {
-    $.post(
-        '/convert', {convert: $('#inputBox').val()},
-        function (data){
-            const fieldNameElement = document.getElementById('contentOutput');
-            fieldNameElement.innerHTML = data;
-        }
-    )
+const outputField = document.getElementById('contentOutput');
+
+$('#inputBox').on('input',function() {
+    let timerId = setTimeout(function () {
+        $.post(
+            '/convert', {convert: $('#inputBox').val()},
+            function (data) {
+                outputField.innerHTML = data;
+            }
+        )
+    }, 1500);
 });
 
-// $('#inputBox').bind(function() {
-//     timerId = setTimeout(function () {
-//         $.post(
-//             '/convert', {convert: $('#inputBox').val()},
-//             function (data) {
-//                 const fieldNameElement = document.getElementById('contentOutput');
-//                 fieldNameElement.innerHTML = data;
-//             }
-//         )
-//     }, 2000);
-// });
+$('#convertButton').on('click',function() {
+    $.post(
+        '/addToHistory', {inputText: $('#inputBox').val(),
+            outputText: outputField.innerHTML}
+    )
+});

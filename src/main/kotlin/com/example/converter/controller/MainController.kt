@@ -34,31 +34,15 @@ class MainController(val converters: List<Converter>, private val converterMessa
         return "main";
     }
 
-//    @PostMapping("/addToHistory")
-//    @ResponseBody
-//    fun convert(@RequestParam convert: String, converterMessage: ConverterMessage, ): String {
-//        val locale = LocaleContextHolder.getLocale()
-//        lateinit var output: String
-//
-//        converterMap[locale.language]?.let {
-//            output = try {
-//                it.gettingData(convert)
-//            } catch(exception: ConverterInputException) {
-//                exception.message
-//            }
-//        } ?: run {
-//            output = config.getString("error")
-//        }
-//
-//
-//        converterMessage.user = SecurityContextHolder.getContext().authentication.principal as User
-//        converterMessage.inputString = convert
-//
-//        converterMessage.convertedString = output
-//        converterMessageRepo.save(converterMessage)
-//
-//        return output
-//    }
+    @PostMapping("/addToHistory")
+    @ResponseBody
+    fun convert(@RequestParam inputText: String, @RequestParam outputText: String,converterMessage: ConverterMessage, ) {
+        converterMessage.user = SecurityContextHolder.getContext().authentication.principal as User
+        converterMessage.inputString = inputText
+        converterMessage.convertedString = outputText
+
+        converterMessageRepo.save(converterMessage)
+    }
 
     @PostMapping("/convert")
     @ResponseBody
@@ -84,6 +68,5 @@ class MainController(val converters: List<Converter>, private val converterMessa
         val current = SecurityContextHolder.getContext().authentication.principal as User
         model["historyList"] = converterMessageRepo?.findByUser(current) as Iterable<ConverterMessage>
     }
-
 
 }

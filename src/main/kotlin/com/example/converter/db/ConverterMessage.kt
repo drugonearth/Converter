@@ -12,5 +12,4 @@ data class ConverterMessage(@Id
                             var user: User?,
                             var inputString: String?,
                             var convertedString: String?) {
-
 }
