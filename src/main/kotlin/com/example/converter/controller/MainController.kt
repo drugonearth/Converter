@@ -6,6 +6,7 @@ import com.example.converter.algorithm.ConverterInputException
 import com.example.converter.db.ConverterMessage
 import com.example.converter.db.User
 import com.example.converter.repos.ConverterMessageRepo
+import com.google.gson.Gson
 import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Controller
@@ -63,10 +64,27 @@ class MainController(val converters: List<Converter>, private val converterMessa
     }
 
     @GetMapping("/history")
-    fun history(model: MutableMap<String, Any>)
+    fun history(): String
+    {
+        return "history"
+    }
+
+    @ResponseBody
+    @GetMapping("/historyTable")
+    fun historyTable(model: MutableMap<String, Any>): String
     {
         val current = SecurityContextHolder.getContext().authentication.principal as User
-        model["historyList"] = converterMessageRepo?.findByUser(current) as Iterable<ConverterMessage>
+        return Gson().toJson(converterMessageRepo?.findByUser(current))
     }
+
+    @ResponseBody
+    @PostMapping("/deleteFromHistory")
+    fun removeFromHistory(@RequestParam id: String)
+    {
+        converterMessageRepo.deleteById(id.toLong())
+    }
+
+
+
 
 }

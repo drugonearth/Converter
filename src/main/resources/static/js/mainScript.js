@@ -13,7 +13,7 @@ $('#inputBox').on('input',function() {
 
 $('#convertButton').on('click',function() {
     $.post(
-        '/addToHistory', {inputText: $('#inputBox').val(),
+        '/deleteFromHistory', {inputText: $('#inputBox').val(),
             outputText: outputField.innerHTML}
     )
 });
